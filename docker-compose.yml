@@ -1,0 +1,24 @@
+services:
+  iqdb:
+    image: ghcr.io/e621ng/iqdb:b988f000f17008677c7546c0c13623bc956b585d
+    command: iqdb http 0.0.0.0 5588 /iqdb/e621.db
+    volumes:
+      - iqdb_data:/iqdb
+    networks:
+      - default
+    labels:
+      - "hostname=iqdb.containers.local"
+
+networks:
+  default:
+    name: iqdb
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.1.24/30
+    driver_opts:
+      com.docker.network.bridge.name: br-iqdb
+
+volumes:
+  iqdb_data:
